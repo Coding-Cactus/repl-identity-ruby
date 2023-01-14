@@ -53,12 +53,12 @@ post "/" do
 
     identity = ReplIdentity::Identity.new(token)
 
-    abort 401 unless identity.verified? &&
+    halt 401 unless identity.verified? &&
         [identity.repl_id, identity.origin_repl_id].include?(CLIENT_REPL_ID)
 
     DB.set(identity.username, colour)
 
-    200
+    halt 200
 end
 ```
 
