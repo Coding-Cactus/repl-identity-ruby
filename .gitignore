@@ -1,0 +1,6 @@
+.replit
+replit.nix
+idea/
+*.gem
+.config/
+main.rb
