@@ -9,11 +9,11 @@ module ReplIdentity
                 "-token=#{token}",
                 "-json"
             )
-            print "\r" + "\e[A\e[K" unless status.success? # Remove error message from replit process
+            print "\r\e[A\e[K" unless status.success? # Remove error message from replit process
 
             identity = status.success? ? JSON.parse(stdout) : {}
 
-            @verified       = status.success?            
+            @success        = status.success?            
             @audience       = identity["aud"]
             @repl_slug      = identity["slug"]
             @username       = identity["user"]
@@ -23,8 +23,10 @@ module ReplIdentity
             @origin_repl_id = identity["originReplid"]
         end
 
-        def verified?
-            @verified
+        def verified?(client_repl_id)
+            @success &&
+                [@repl_id, @origin_repl_id].include?(client_repl_id) &&
+                @audience == REPL_ID
         end
     end
 end

@@ -53,8 +53,7 @@ post "/" do
 
     identity = ReplIdentity::Identity.new(token)
 
-    halt 401 unless identity.verified? &&
-        [identity.repl_id, identity.origin_repl_id].include?(CLIENT_REPL_ID)
+    halt 401 unless identity.verified?(CLIENT_REPL_ID)
 
     DB.set(identity.username, colour)
 
